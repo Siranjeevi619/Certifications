@@ -8,21 +8,27 @@ public class SubarraySum {
         }
         return count;
     }
-    static ArrayList<Integer> subarraySum(int[] arr, int target) {
-        ArrayList<Integer> res = new ArrayList<>();
+    static ArrayList<Integer> subarraySum(int[] arr, int s) {
+        ArrayList <Integer> res = new ArrayList<>();
         int arrSize = arr.length;
+        int start = 0;
+        int end = 0;
+        int sum = 0;
         for(int i=0;i<arrSize;i++){
-            for(int j=i;j<arrSize;j++){
-                int ans = SumOfSubarray(arr,i,j);
-                if(ans == target){
-                    System.out.println(i+" "+arr[i]);
-                    System.out.println(j+" "+arr[j]);
-                    res.add(i);
-                    res.add(j);
-                    break;
+            sum += arr[i];
+            if(sum >= s){
+                end = i;
+                while(sum > s&& start < end){
+                    sum -= arr[start++];
                 }
             }
+            if(sum == s){
+                res.add(start+1);
+                res.add(end+1);
+                return res;
+            }
         }
+        res.add(-1);
         return res;
     }
 
